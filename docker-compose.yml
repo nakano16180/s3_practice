@@ -1,0 +1,31 @@
+version: "2"
+services:
+  minio:
+    container_name: minio
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"
+    environment:
+      - "MINIO_ACCESS_KEY=minioadmin"
+      - "MINIO_SECRET_KEY=minioadmin"
+    command: server /export
+
+  createbuckets:
+    container_name: mc
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      until (/usr/bin/mc config host add myminio http://minio:9000 minioadmin minioadmin) do echo '...waiting...' && sleep 1; done;
+      /usr/bin/mc admin config set myminio notify_webhook:1 queue_limit="0"  endpoint="http://d-lambda:9001/2015-03-31/functions/myfunction/invocations" queue_dir="";
+      /usr/bin/mc admin service restart myminio;
+      /usr/bin/mc mb myminio/test;
+      /usr/bin/mc event add myminio/test arn:minio:sqs::1:webhook --event put --suffix .mp4;
+      /usr/bin/mc event list myminio/test;
+      exit 0;
+      "
+networks:
+  default:
+    external:
+      name: minio-lambda-net
