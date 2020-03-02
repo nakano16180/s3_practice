@@ -17,8 +17,9 @@ Minio serverのセットアップ用CLIツール
 $ docker run -it --entrypoint=/bin/sh minio/mc
 ```
 
-### webhook
+### webhook with docker-lambda
 
+Webhookのエンドポイントとなるdocker-lambdaを立ち上げる
 ```
 $ docker network create minio-lambda-net
 $ docker run --rm \
@@ -33,6 +34,8 @@ $ docker run --rm \
   index.handler
 ```
 
+
+次にMinio serverを立ち上げる。testという名前のバケットにmp4をアップロードするとeventが発火する。
 
 ```
 $ docker-compose up
