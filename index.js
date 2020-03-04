@@ -52,6 +52,18 @@ const putObject = function(body, bucket, key, resolve, preserve) {
   });
 };
 
+function baseName(str){
+   var base = new String(str).substring(str.lastIndexOf('/') + 1); 
+    if(base.lastIndexOf(".") != -1)       
+        base = base.substring(0, base.lastIndexOf("."));
+   return base;
+}
+
+// NUM=値 LEN=桁数
+function zeroPadding(NUM, LEN){
+	return ( Array(LEN).join('0') + NUM ).slice( -LEN );
+}
+
 exports.handler = (event, context, callback) => {
   try {
     //console.log("EVENT: \n" + JSON.stringify(event, null, 2));
@@ -67,6 +79,8 @@ exports.handler = (event, context, callback) => {
     var uplodedFile = event.Records[0].s3.object.key;
     console.log('==== uploaded file ====');
     console.log(uplodedFile);
+    var filename = baseName(uplodedFile);
+    console.log(filename);
     console.log('=============================');
 
     getObject(bucketName, uplodedFile, function(srcData) {        
@@ -81,7 +95,7 @@ exports.handler = (event, context, callback) => {
 
       for (var i = 1; i <= files.length - 1; i++) {
         var fileStream = fs.createReadStream('/tmp/'+ i +'.jpg');
-        putObject(fileStream, bucketName, 'Output/output' + i +'.jpg', function(data) {
+        putObject(fileStream, bucketName, filename + '/' + zeroPadding(i, 6) +'.jpg', function(data) {
           callback(null, 'OK');
         });
       }
