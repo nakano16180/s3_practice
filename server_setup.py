@@ -20,13 +20,16 @@ print("-------------------------")
 try:
     if not minioClient.bucket_exists("mybucket"):
         minioClient.make_bucket("mybucket", location="us-east-1")
+    
+    minioClient.remove_all_bucket_notification('mybucket')
     notification = minioClient.get_bucket_notification('mybucket')
     print(notification)
 
     notification = {
-        'CloudFunctionConfigurations': [
+        'QueueConfigurations': [
             {
-                'Arn': 'arn3',
+                'Id': '1',
+                'Arn': 'arn1',
                 'Events': ['s3:ObjectCreated:*'],
                 'Filter': {
                     'Key': {
