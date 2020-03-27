@@ -35,8 +35,22 @@ $ docker run --rm \
 ```
 
 
-次にMinio serverを立ち上げる。testという名前のバケットにmp4をアップロードするとeventが発火する。
+次にMinio serverを立ち上げる。
 
 ```
 $ docker-compose up
 ```
+
+以下の手順でサーバーの設定を行う
+
+```
+$ mc config host add myminio http://172.17.0.2:9000 minioadmin minioadmin
+$ mc mb myminio/test
+
+$ mc admin config set myminio notify_webhook:1 queue_limit="0"  endpoint="http://d-lambda:9001/2015-03-31/functions/myfunction/invocations" queue_dir=""
+$ mc admin service restart myminio
+
+$ mc event add myminio/test arn:minio:sqs::1:webhook --event put --suffix .mp4
+```
+
+ブラウザーを開き、testという名前のバケットにmp4をアップロードするとeventが発火する。
