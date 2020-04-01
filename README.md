@@ -14,7 +14,7 @@ $ docker run -p 9000:9000 minio/minio server /data
 Minio serverのセットアップ用CLIツール
 
 ```
-$ docker run -it --entrypoint=/bin/sh minio/mc
+$ docker run --rm --name mc --net=minio-lambda-net -it --entrypoint=/bin/sh minio/mc
 ```
 
 ### webhook with docker-lambda
