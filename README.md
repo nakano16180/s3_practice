@@ -4,17 +4,10 @@
 
 [公式ドキュメント](https://docs.min.io/)
 
-```
-$ docker pull minio/minio
-$ docker run -p 9000:9000 minio/minio server /data
-```
-
-### mc
-
-Minio serverのセットアップ用CLIツール
+以下のコマンドでサーバーを立ち上げる
 
 ```
-$ docker run --rm --name mc --net=minio-lambda-net -it --entrypoint=/bin/sh minio/mc
+$ docker-compose up
 ```
 
 ### webhook with docker-lambda
@@ -34,11 +27,10 @@ $ docker run --rm \
   index.handler
 ```
 
-
-次にMinio serverを立ち上げる。
+Minio serverのセットアップ用CLIツール
 
 ```
-$ docker-compose up
+$ docker run --rm --name mc --net=minio-lambda-net -it --entrypoint=/bin/sh minio/mc
 ```
 
 以下の手順でサーバーの設定を行う
