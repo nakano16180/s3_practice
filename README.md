@@ -12,7 +12,7 @@ $ docker-compose up
 
 ### webhook with docker-lambda
 
-Webhookのエンドポイントとなるdocker-lambdaを立ち上げる
+#### Webhookのエンドポイントとなるdocker-lambdaを立ち上げる
 ```
 $ docker network create minio-lambda-net
 $ docker run --rm \
@@ -26,7 +26,12 @@ $ docker run --rm \
   lambci/lambda:nodejs10.x \
   index.handler
 ```
+もしくは、docker-composeを用いる
+```
+$ docker-compose -f docker-compose.lambda.yml up
+```
 
+#### Minio Serverの設定
 Minio serverのセットアップ用CLIツール
 
 ```
