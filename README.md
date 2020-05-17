@@ -28,11 +28,12 @@ $ docker run --rm \
 ```
 もしくは、docker-composeを用いる
 ```
-$ docker-compose -f docker-compose.lambda.yml up
+$ docker-compose -f docker-compose.lambda.yml up -d
 ```
 
 #### Minio Serverの設定
-Minio serverのセットアップ用CLIツール
+Minio serverのセットアップ用CLIツールを用いる。
+（先に ```docker logs minio``` で立ち上げたminioのログを確認しておく）
 
 ```
 $ docker run --rm --name mc --net=minio-lambda-net -it --entrypoint=/bin/sh minio/mc
