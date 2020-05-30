@@ -5,6 +5,8 @@ services:
     image: minio/minio
     ports:
       - "9000:9000"
+    volumes:
+      - ./data:/export
     environment:
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}

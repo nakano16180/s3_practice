@@ -1,6 +1,6 @@
 ## Object storage for Local
 
-envファイルを用意しておく
+以下の内容で.envファイルを用意しておく
 
 ```
 MINIO_ACCESS_KEY=minioadmin
