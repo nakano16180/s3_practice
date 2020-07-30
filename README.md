@@ -14,7 +14,7 @@ MINIO_SECRET_KEY=minioadmin
 以下のコマンドでサーバーを立ち上げる
 
 ```
-$ docker-compose up
+$ docker-compose up -d
 ```
 
 ### webhook with docker-lambda
@@ -42,16 +42,18 @@ $ docker-compose -f docker-compose.lambda.yml up -d
 
 #### Minio Serverの設定
 Minio serverのセットアップ用CLIツールを用いる。
-（先に ```docker logs minio``` で立ち上げたminioのログを確認しておく）
+Minio serverと同時にmcコンテナを立ち上げているため、そこに入る
 
 ```
-$ docker run --rm --name mc --net=minio-lambda-net -it --entrypoint=/bin/sh minio/mc
+$ docker-compose exec mc /bin/sh
 ```
 
 以下の手順でサーバーの設定を行う
 
 ```
-# mc config host add myminio http://172.17.0.2:9000 minioadmin minioadmin
+立ち上がってるminio サーバーを確認
+# mc admin info minio
+
 # mc mb myminio/test
 
 # mc admin config set myminio notify_webhook:1 queue_limit="0"  endpoint="http://d-lambda:9001/2015-03-31/functions/myfunction/invocations" queue_dir=""
@@ -61,3 +63,8 @@ $ docker run --rm --name mc --net=minio-lambda-net -it --entrypoint=/bin/sh mini
 ```
 
 ブラウザーを開き、testという名前のバケットにmp4をアップロードするとeventが発火する。
+
+## 参考
+  - [Docker Composeを使用してMinIO Serverを建てる](https://blog.ri52dksla.dev/posts/minio-docker-compose/)
+  - [MinIO Client Complete Guide](https://docs.min.io/docs/minio-client-complete-guide.html)
+  
