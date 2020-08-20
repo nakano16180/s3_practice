@@ -12,7 +12,25 @@ services:
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
     command: server /export
     restart: always
-
+  mc:
+    container_name: mc
+    image: minio/mc
+    ports:
+      - "9001:9001"
+    environment:
+      MINIO_PORT: 9000
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+    entrypoint: [""]
+    command:
+      - /bin/sh
+      - -c
+      - |
+        mc config host add minio http://minio:$${MINIO_PORT} $${MINIO_ACCESS_KEY} $${MINIO_SECRET_KEY} --api S3v4
+        mc admin trace minio
+    depends_on:
+      - minio
+    restart: always
 networks:
   default:
     external:
