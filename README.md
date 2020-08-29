@@ -35,6 +35,9 @@ $ docker-compose exec mc /bin/sh
 # mc mb minio/test
 ```
 
+### Webhook
+  - https://github.com/nakano16180/minio_webhook
+
 ### 参考
   - [Docker Composeを使用してMinIO Serverを建てる](https://blog.ri52dksla.dev/posts/minio-docker-compose/)
   - [MinIO Client Complete Guide](https://docs.min.io/docs/minio-client-complete-guide.html)
