@@ -7,6 +7,12 @@ MINIO_ACCESS_KEY=minioadmin
 MINIO_SECRET_KEY=minioadmin
 ```
 
+### ネットワークの作成
+
+```
+$ docker network create minio-lambda-net
+```
+
 ### Minio
 
 [公式ドキュメント](https://docs.min.io/)

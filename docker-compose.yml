@@ -12,6 +12,8 @@ services:
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
     command: server /export
     restart: always
+    networks:
+      - minio-lambda-net
   mc:
     container_name: mc
     image: minio/mc
@@ -31,7 +33,8 @@ services:
     depends_on:
       - minio
     restart: always
+    networks:
+      - minio-lambda-net
 networks:
-  default:
-    external:
-      name: minio-lambda-net
+  minio-lambda-net:
+    external: true
