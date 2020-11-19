@@ -1,5 +1,6 @@
-## Object storage for Local
+## s3_practice
 
+### 使い方
 以下の内容で.envファイルを用意しておく
 
 ```
@@ -7,19 +8,14 @@ MINIO_ACCESS_KEY=minioadmin
 MINIO_SECRET_KEY=minioadmin
 ```
 
-### Minio
-
-[公式ドキュメント](https://docs.min.io/)
-
-以下のコマンドでサーバーを立ち上げる
+以下のコマンドで[Minio](https://docs.min.io/)サーバーを立ち上げる
 
 ```
 $ docker-compose up -d
 ```
 
-#### Minio Serverの設定
-Minio serverのセットアップ用CLIツール [mc](https://docs.min.io/docs/minio-client-complete-guide.html) を用いる。
-Minio serverと同時にmcコンテナを立ち上げているため、そこに入る
+サーバーの各種設定を行うには、Minioのセットアップ用CLIツール [mc](https://docs.min.io/docs/minio-client-complete-guide.html) を用いる。
+Minioサーバーと同時にmcコンテナを立ち上げているため、そこに入る
 
 ```
 $ docker-compose exec mc /bin/sh
@@ -28,7 +24,7 @@ $ docker-compose exec mc /bin/sh
 以下の手順でサーバーの設定を行う
 
 ```
-立ち上がってるminio サーバーを確認
+立ち上がってるサーバーを確認(docker-composeを使ってminioという名前で立ち上げている)
 # mc admin info minio
 
 バケットの作成
