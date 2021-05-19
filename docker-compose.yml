@@ -8,8 +8,8 @@ services:
     volumes:
       - ./data:/export
     environment:
-      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
-      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
     command: server /export
     restart: always
   mc:
@@ -19,14 +19,14 @@ services:
       - "9001:9001"
     environment:
       MINIO_PORT: 9000
-      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
-      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
     entrypoint: [""]
     command:
       - /bin/sh
       - -c
       - |
-        mc config host add minio http://minio:$${MINIO_PORT} $${MINIO_ACCESS_KEY} $${MINIO_SECRET_KEY} --api S3v4
+        mc config host add minio http://minio:$${MINIO_PORT} $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD} --api S3v4
         mc admin trace minio
     depends_on:
       - minio
