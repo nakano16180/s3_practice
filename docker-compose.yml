@@ -14,6 +14,5 @@ services:
     command: server  /export --console-address ":9001"
 
 networks:
-  default:
-    external:
-      name: minio-lambda-net
+  minio-lambda-net:
+    external: true

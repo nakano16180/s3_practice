@@ -8,13 +8,14 @@ MINIO_ROOT_USER=minioadmin
 MINIO_ROOT_PASSWORD=minioadmin
 ```
 
-## ネットワーク作成
+### ネットワークの作成
 
 ```
 $ docker network create minio-lambda-net
 ```
 
-## サーバー立ち上げ
+### Minio
+
 以下のコマンドで[Minio](https://docs.min.io/)サーバーを立ち上げる
 
 ```
